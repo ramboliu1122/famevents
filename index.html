@@ -6,17 +6,15 @@
 <title>Famevents — 专业活动与展览策划</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+SC:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0a0a0c;
-    --bg-elevated: #131318;
-    --fg: #e8e6e3;
-    --fg-muted: #8a8780;
-    --accent: #c9a962;
-    --accent-dim: rgba(201, 169, 98, 0.15);
-    --border: rgba(255,255,255,0.07);
-    --card: rgba(255,255,255,0.03);
+    --bg: #ffffff;
+    --bg-alt: #f5f5f7;
+    --fg: #1d1d1f;
+    --fg-muted: #86868b;
+    --accent: #0071e3;
+    --border: #d2d2d7;
     --font-display: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-body: 'Noto Sans SC', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   }
@@ -29,18 +27,9 @@
     background: var(--bg);
     color: var(--fg);
     font-family: var(--font-body);
-    line-height: 1.7;
-    overflow-x: hidden;
-  }
-
-  /* ── Noise overlay ── */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 9999;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   /* ── Hero ── */
@@ -52,44 +41,33 @@
     align-items: center;
     text-align: center;
     padding: 2rem;
-    position: relative;
-    background: radial-gradient(ellipse at 50% 40%, rgba(201,169,98,0.06) 0%, transparent 60%);
+    padding-top: 0;
   }
 
   .hero-brand {
     font-family: var(--font-display);
-    font-size: clamp(3rem, 10vw, 7rem);
+    font-size: clamp(3.5rem, 11vw, 8rem);
     font-weight: 800;
-    letter-spacing: -0.04em;
+    letter-spacing: -0.05em;
     line-height: 1;
-    margin-bottom: 0.5rem;
-    background: linear-gradient(135deg, var(--fg) 0%, var(--accent) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--fg);
+    margin-bottom: 1.25rem;
   }
 
   .hero-subtitle {
-    font-size: clamp(1rem, 2.5vw, 1.35rem);
+    font-size: clamp(1.1rem, 2.8vw, 1.5rem);
     color: var(--fg-muted);
-    font-weight: 300;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-bottom: 2rem;
-  }
-
-  .hero-line {
-    width: 60px;
-    height: 1px;
-    background: var(--accent);
-    margin-bottom: 2rem;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    margin-bottom: 2.5rem;
   }
 
   .hero-desc {
-    max-width: 520px;
-    font-size: 1.05rem;
+    max-width: 480px;
+    font-size: 0.95rem;
     color: var(--fg-muted);
-    line-height: 1.9;
+    line-height: 1.8;
+    font-weight: 400;
   }
 
   .scroll-hint {
@@ -102,40 +80,33 @@
     align-items: center;
     gap: 0.5rem;
     color: var(--fg-muted);
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
     animation: float 2s ease-in-out infinite;
   }
   @keyframes float { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
 
-  .scroll-hint svg { width: 16px; height: 16px; stroke: var(--accent); }
+  .scroll-hint svg { width: 14px; height: 14px; stroke: var(--fg-muted); opacity: 0.5; }
 
   /* ── Section base ── */
-  section { padding: 6rem 2rem; max-width: 1200px; margin: 0 auto; }
+  section { padding: 8rem 2rem; max-width: 960px; margin: 0 auto; }
 
   .section-label {
-    font-size: 0.72rem;
-    letter-spacing: 0.2em;
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--accent);
-    margin-bottom: 0.75rem;
+    margin-bottom: 1rem;
     font-weight: 600;
   }
 
   .section-title {
     font-family: var(--font-display);
-    font-size: clamp(2rem, 5vw, 3.2rem);
-    font-weight: 600;
-    line-height: 1.15;
-    margin-bottom: 1rem;
-    letter-spacing: -0.02em;
-  }
-
-  .section-divider {
-    width: 40px;
-    height: 2px;
-    background: var(--accent);
-    margin-bottom: 3rem;
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    font-weight: 700;
+    line-height: 1.12;
+    margin-bottom: 3.5rem;
+    letter-spacing: -0.03em;
   }
 
   /* ── About ── */
@@ -144,46 +115,46 @@
   .about-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 4rem;
+    gap: 5rem;
     align-items: start;
   }
 
   .about-text p {
     color: var(--fg-muted);
-    margin-bottom: 1.5rem;
-    font-size: 1.02rem;
+    margin-bottom: 1.75rem;
+    font-size: 0.95rem;
+    line-height: 1.85;
   }
 
-  .about-text p strong { color: var(--fg); font-weight: 500; }
+  .about-text p strong { color: var(--fg); font-weight: 600; }
 
   .about-stats {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
+    gap: 1px;
+    background: var(--border);
   }
 
   .stat-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    padding: 2rem;
-    transition: border-color 0.3s;
+    background: var(--bg);
+    padding: 2.5rem 2rem;
+    text-align: center;
   }
-  .stat-card:hover { border-color: rgba(201,169,98,0.3); }
 
   .stat-number {
     font-family: var(--font-display);
-    font-size: 2.8rem;
+    font-size: 3.2rem;
     font-weight: 700;
     color: var(--accent);
     line-height: 1;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
     letter-spacing: -0.03em;
   }
 
   .stat-label {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: var(--fg-muted);
-    letter-spacing: 0.05em;
+    font-weight: 400;
   }
 
   /* ── Services ── */
@@ -191,50 +162,35 @@
 
   .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
   }
 
   .service-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    padding: 2.5rem 2rem;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
+    background: var(--bg);
+    padding: 2.5rem 1.75rem;
+    text-align: center;
   }
-
-  .service-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 2px;
-    background: linear-gradient(90deg, transparent, var(--accent), transparent);
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  .service-card:hover::before { opacity: 1; }
-  .service-card:hover { border-color: rgba(201,169,98,0.25); transform: translateY(-4px); }
 
   .service-icon {
-    font-size: 1.8rem;
-    margin-bottom: 1.2rem;
-    filter: grayscale(0.3);
+    font-size: 2rem;
+    margin-bottom: 1.25rem;
+    display: block;
   }
 
   .service-title {
     font-family: var(--font-display);
-    font-size: 1.2rem;
+    font-size: 1.05rem;
     font-weight: 600;
     margin-bottom: 0.75rem;
-    letter-spacing: -0.01em;
+    color: var(--fg);
   }
 
   .service-desc {
-    font-size: 0.92rem;
+    font-size: 0.82rem;
     color: var(--fg-muted);
-    line-height: 1.7;
+    line-height: 1.75;
   }
 
   /* ── Cases ── */
@@ -247,98 +203,88 @@
 
   .case-card {
     display: grid;
-    grid-template-columns: 1.2fr 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 0;
-    background: var(--card);
-    border: 1px solid var(--border);
+    background: var(--bg-alt);
+    border-radius: 0;
     overflow: hidden;
-    transition: border-color 0.3s;
   }
 
-  .case-card:hover { border-color: rgba(201,169,98,0.3); }
-  .case-card.reverse { grid-template-columns: 1fr 1.2fr; }
+  .case-card.reverse { grid-template-columns: 1fr 1fr; }
 
   .case-visual {
-    min-height: 320px;
+    min-height: 360px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: var(--font-display);
-    font-size: 3rem;
-    font-weight: 900;
-    color: rgba(255,255,255,0.06);
-    position: relative;
-    overflow: hidden;
+    font-size: 3.5rem;
+    font-weight: 800;
   }
 
-  .case-visual.hdc {
-    background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #1a2332 100%);
-  }
-  .case-visual.hdc::after {
-    content: '';
-    position: absolute;
-    width: 200px; height: 200px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(201,169,98,0.12) 0%, transparent 70%);
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
+  .case-visual.dc {
+    background: #1d1d1f;
+    color: rgba(255,255,255,0.05);
+    letter-spacing: -0.02em;
   }
 
-  .case-visual.placeholder-2 {
-    background: linear-gradient(135deg, #fdf2e1 0%, #f8e3c4 50%, #e8d5b7 100%);
-    color: rgba(0,0,0,0.08);
-  }
-  .case-visual.placeholder-3 {
-    background: linear-gradient(135deg, #0a1214 0%, #101a1e 100%);
+  .case-visual.bf {
+    background: #faf6f0;
+    color: rgba(0,0,0,0.05);
+    letter-spacing: -0.02em;
   }
 
-  .case-content { padding: 2.5rem 2.5rem; display: flex; flex-direction: column; justify-content: center; }
+  .case-content {
+    padding: 3rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 
   .case-tag {
     display: inline-block;
     font-size: 0.7rem;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--accent);
-    border: 1px solid rgba(201,169,98,0.3);
-    padding: 0.25rem 0.75rem;
-    margin-bottom: 1rem;
-    width: fit-content;
+    font-weight: 600;
+    margin-bottom: 1.25rem;
   }
 
   .case-title {
     font-family: var(--font-display);
-    font-size: 1.6rem;
-    font-weight: 600;
+    font-size: 1.5rem;
+    font-weight: 700;
     margin-bottom: 1rem;
-    line-height: 1.3;
-    letter-spacing: -0.01em;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    color: var(--fg);
   }
 
   .case-desc {
-    font-size: 0.95rem;
+    font-size: 0.88rem;
     color: var(--fg-muted);
-    line-height: 1.8;
+    line-height: 1.85;
     margin-bottom: 1.5rem;
   }
 
   .case-meta {
     display: flex;
     gap: 2rem;
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     color: var(--fg-muted);
   }
 
-  .case-meta span strong { color: var(--fg); font-weight: 500; }
+  .case-meta span strong { color: var(--fg); font-weight: 600; }
 
   /* ── Contact ── */
   #contact { border-top: 1px solid var(--border); text-align: center; }
 
-  .contact-inner { max-width: 600px; margin: 0 auto; }
+  .contact-inner { max-width: 520px; margin: 0 auto; }
 
   .contact-text {
     color: var(--fg-muted);
-    font-size: 1.05rem;
+    font-size: 1rem;
     margin-bottom: 3rem;
     line-height: 1.8;
   }
@@ -346,50 +292,47 @@
   .contact-info {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.75rem;
   }
 
   .contact-item {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.75rem;
-    font-size: 1rem;
+    gap: 0.5rem;
+    font-size: 0.95rem;
     color: var(--fg-muted);
   }
 
-  .contact-item strong { color: var(--fg); }
+  .contact-item strong { color: var(--fg); font-weight: 600; margin-right: 0.25rem; }
 
   /* ── Footer ── */
   footer {
     text-align: center;
-    padding: 3rem 2rem;
+    padding: 2.5rem 2rem;
     border-top: 1px solid var(--border);
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     color: var(--fg-muted);
   }
 
-  footer span { color: var(--accent); }
-
   /* ── Responsive ── */
   @media (max-width: 768px) {
-    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .services-grid { grid-template-columns: 1fr 1fr; }
     .case-card, .case-card.reverse { grid-template-columns: 1fr; }
-    .case-visual { min-height: 220px; }
-    section { padding: 4rem 1.5rem; }
+    .case-visual { min-height: 240px; }
+    section { padding: 5rem 1.5rem; }
     .about-stats { grid-template-columns: 1fr 1fr; }
+    .case-content { padding: 2rem 1.5rem; }
   }
 
   /* ── Fade-in animation ── */
   .fade-in {
     opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
   }
-  .fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
 </style>
 </head>
 <body>
@@ -398,19 +341,17 @@
 <section class="hero">
   <div class="hero-brand">Famevents</div>
   <div class="hero-subtitle">Elevate Your Occasions.</div>
-  <div class="hero-line"></div>
   <p class="hero-desc">专业活动与展览策划 · 从概念到现场，为品牌打造令人难忘的沉浸式体验。专注大型科技展会、品牌发布会及互动体验空间设计与执行。</p>
   <div class="scroll-hint">
-    <span>Scroll</span>
+    <span>SCROLL</span>
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
   </div>
 </section>
 
 <!-- ═══════ ABOUT ═══════ -->
 <section id="about" class="fade-in">
-  <div class="section-label">About</div>
+  <p class="section-label">About</p>
   <h2 class="section-title">关于我们</h2>
-  <div class="section-divider"></div>
   <div class="about-grid">
     <div class="about-text">
       <p><strong>Famevents</strong> 是一家专注于<strong>大型活动策划与展览展示</strong>的创意执行团队。我们服务于全球知名品牌与科技公司，从概念设计到现场落地，提供全流程解决方案。</p>
@@ -440,27 +381,26 @@
 
 <!-- ═══════ SERVICES ═══════ -->
 <section id="services" class="fade-in">
-  <div class="section-label">Services</div>
+  <p class="section-label">Services</p>
   <h2 class="section-title">核心业务</h2>
-  <div class="section-divider"></div>
   <div class="services-grid">
     <div class="service-card">
-      <div class="service-icon">🎪</div>
+      <span class="service-icon">🎪</span>
       <div class="service-title">大型展会策划</div>
       <div class="service-desc">科技展会、行业峰会、产品发布会的整体策划与执行管理，从展位设计到搭建落地的全链路把控。</div>
     </div>
     <div class="service-card">
-      <div class="service-icon">🎨</div>
+      <span class="service-icon">🎨</span>
       <div class="service-title">互动体验设计</div>
       <div class="service-desc">沉浸式互动展区规划、用户体验动线设计、数字装置与实体空间的融合方案。</div>
     </div>
     <div class="service-card">
-      <div class="service-icon">📐</div>
+      <span class="service-icon">📐</span>
       <div class="service-title">空间设计与施工</div>
       <div class="service-desc">3D建模、LayOut施工图输出、物料清单统筹、现场搭建监理与质量验收。</div>
     </div>
     <div class="service-card">
-      <div class="service-icon">🎯</div>
+      <span class="service-icon">🎯</span>
       <div class="service-title">项目管理与运营</div>
       <div class="service-desc">多供应商协调、进度管控、应急预案制定、VIP接待流程设计与现场运营支持。</div>
     </div>
@@ -469,18 +409,15 @@
 
 <!-- ═══════ CASES ═══════ -->
 <section id="cases" class="fade-in">
-  <div class="section-label">Cases</div>
+  <p class="section-label">Cases</p>
   <h2 class="section-title">代表案例</h2>
-  <div class="section-divider"></div>
   <div class="cases-grid">
 
     <!-- Case 1: Tech Conference -->
     <div class="case-card">
-      <div class="case-visual hdc">
-        <span>DC</span>
-      </div>
+      <div class="case-visual dc">DC</div>
       <div class="case-content">
-        <div class="case-tag">进行中 · 2026</div>
+        <p class="case-tag">进行中 · 2026</p>
         <h3 class="case-title">某头部科技公司<br>全球开发者大会</h3>
         <p class="case-desc">承接全球开发者大会互动体验区策划与执行。涵盖四大主题展区（运动健康、智慧办公、智能家居、企业协作）、合作伙伴联排展位、数字包容专区及智慧出行展区。负责从概念方案、3D设计、施工图输出到现场搭建的全流程管理。</p>
         <div class="case-meta">
@@ -492,11 +429,9 @@
 
     <!-- Case 2: BabyFirst -->
     <div class="case-card reverse">
-      <div class="case-visual placeholder-2">
-        <span>BF</span>
-      </div>
+      <div class="case-visual bf">BF</div>
       <div class="case-content">
-        <div class="case-tag">2026</div>
+        <p class="case-tag">2026</p>
         <h3 class="case-title">BabyFirst 宝贝第一<br>新品发布会</h3>
         <p class="case-desc">负责品牌新品发布会从概念创意到现场落地的全案执行。活动于宁波举办，近200位来宾，分设上午经销商伙伴专场与下午母婴垂类达人专场，精准服务两类不同受众。同期提供全国门店展示道具设计与制作，确保品牌终端形象一致性。</p>
         <div class="case-meta">
@@ -511,23 +446,22 @@
 
 <!-- ═══════ CONTACT ═══════ -->
 <section id="contact" class="fade-in">
-  <div class="section-label">Contact</div>
+  <p class="section-label">Contact</p>
   <h2 class="section-title">联系我们</h2>
-  <div class="section-divider"></div>
   <div class="contact-inner">
     <p class="contact-text">期待与您探讨下一个精彩项目的可能性。<br>无论是概念阶段还是执行阶段，我们都随时待命。</p>
     <div class="contact-info">
       <div class="contact-item">
-        <strong>负责人：</strong> Rambo 刘
+        <strong>负责人：</strong>Rambo 刘
       </div>
       <div class="contact-item">
-        <strong>职位：</strong> Event Director
+        <strong>职位：</strong>Event Director
       </div>
       <div class="contact-item">
-        <strong>邮箱：</strong> rambo.liu@famevents.cn
+        <strong>邮箱：</strong>rambo.liu@famevents.cn
       </div>
       <div class="contact-item">
-        <strong>所在地：</strong> 上海
+        <strong>所在地：</strong>上海
       </div>
     </div>
   </div>
@@ -535,10 +469,9 @@
 
 <!-- ═══════ FOOTER ═══════ -->
 <footer>
-  &copy; 2026 <span>Famevents</span>. All rights reserved.
+  &copy; 2026 Famevents
 </footer>
 
-<!-- ═══════ Scroll Reveal ═══════ -->
 <script>
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
