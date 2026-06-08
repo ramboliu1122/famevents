@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Famevents — 专业活动与展览策划</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0c;
+    --bg-elevated: #131318;
+    --fg: #e8e6e3;
+    --fg-muted: #8a8780;
+    --accent: #c9a962;
+    --accent-dim: rgba(201, 169, 98, 0.15);
+    --border: rgba(255,255,255,0.07);
+    --card: rgba(255,255,255,0.03);
+    --font-display: 'Playfair Display', 'Noto Serif SC', serif;
+    --font-body: 'Noto Sans SC', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-body);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── Noise overlay ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+    position: relative;
+    background: radial-gradient(ellipse at 50% 40%, rgba(201,169,98,0.06) 0%, transparent 60%);
+  }
+
+  .hero-brand {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 10vw, 7rem);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, var(--fg) 0%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-subtitle {
+    font-size: clamp(1rem, 2.5vw, 1.35rem);
+    color: var(--fg-muted);
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
+  .hero-line {
+    width: 60px;
+    height: 1px;
+    background: var(--accent);
+    margin-bottom: 2rem;
+  }
+
+  .hero-desc {
+    max-width: 520px;
+    font-size: 1.05rem;
+    color: var(--fg-muted);
+    line-height: 1.9;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--fg-muted);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    animation: float 2s ease-in-out infinite;
+  }
+  @keyframes float { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+
+  .scroll-hint svg { width: 16px; height: 16px; stroke: var(--accent); }
+
+  /* ── Section base ── */
+  section { padding: 6rem 2rem; max-width: 1200px; margin: 0 auto; }
+
+  .section-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  .section-divider {
+    width: 40px;
+    height: 2px;
+    background: var(--accent);
+    margin-bottom: 3rem;
+  }
+
+  /* ── About ── */
+  #about { border-top: 1px solid var(--border); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .about-text p {
+    color: var(--fg-muted);
+    margin-bottom: 1.5rem;
+    font-size: 1.02rem;
+  }
+
+  .about-text p strong { color: var(--fg); font-weight: 500; }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    transition: border-color 0.3s;
+  }
+  .stat-card:hover { border-color: rgba(201,169,98,0.3); }
+
+  .stat-number {
+    font-family: var(--font-display);
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-label {
+    font-size: 0.85rem;
+    color: var(--fg-muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── Services ── */
+  #services { border-top: 1px solid var(--border); }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .service-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 2.5rem 2rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .service-card:hover::before { opacity: 1; }
+  .service-card:hover { border-color: rgba(201,169,98,0.25); transform: translateY(-4px); }
+
+  .service-icon {
+    font-size: 1.8rem;
+    margin-bottom: 1.2rem;
+    filter: grayscale(0.3);
+  }
+
+  .service-title {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+
+  .service-desc {
+    font-size: 0.92rem;
+    color: var(--fg-muted);
+    line-height: 1.7;
+  }
+
+  /* ── Cases ── */
+  #cases { border-top: 1px solid var(--border); }
+
+  .cases-grid {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .case-card {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 0;
+    background: var(--card);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+
+  .case-card:hover { border-color: rgba(201,169,98,0.3); }
+  .case-card.reverse { grid-template-columns: 1fr 1.2fr; }
+
+  .case-visual {
+    min-height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 3rem;
+    font-weight: 900;
+    color: rgba(255,255,255,0.06);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .case-visual.hdc {
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #1a2332 100%);
+  }
+  .case-visual.hdc::after {
+    content: '';
+    position: absolute;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,169,98,0.12) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .case-visual.placeholder-2 {
+    background: linear-gradient(135deg, #1a1410 0%, #1f1814 100%);
+  }
+  .case-visual.placeholder-3 {
+    background: linear-gradient(135deg, #0a1214 0%, #101a1e 100%);
+  }
+
+  .case-content { padding: 2.5rem 2.5rem; display: flex; flex-direction: column; justify-content: center; }
+
+  .case-tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid rgba(201,169,98,0.3);
+    padding: 0.25rem 0.75rem;
+    margin-bottom: 1rem;
+    width: fit-content;
+  }
+
+  .case-title {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+
+  .case-desc {
+    font-size: 0.95rem;
+    color: var(--fg-muted);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+  }
+
+  .case-meta {
+    display: flex;
+    gap: 2rem;
+    font-size: 0.82rem;
+    color: var(--fg-muted);
+  }
+
+  .case-meta span strong { color: var(--fg); font-weight: 500; }
+
+  /* ── Contact ── */
+  #contact { border-top: 1px solid var(--border); text-align: center; }
+
+  .contact-inner { max-width: 600px; margin: 0 auto; }
+
+  .contact-text {
+    color: var(--fg-muted);
+    font-size: 1.05rem;
+    margin-bottom: 3rem;
+    line-height: 1.8;
+  }
+
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    font-size: 1rem;
+    color: var(--fg-muted);
+  }
+
+  .contact-item strong { color: var(--fg); }
+
+  /* ── Footer ── */
+  footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.82rem;
+    color: var(--fg-muted);
+  }
+
+  footer span { color: var(--accent); }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .case-card, .case-card.reverse { grid-template-columns: 1fr; }
+    .case-visual { min-height: 220px; }
+    section { padding: 4rem 1.5rem; }
+    .about-stats { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* ── Fade-in animation ── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════ HERO ═══════ -->
+<section class="hero">
+  <div class="hero-brand">Famevents</div>
+  <div class="hero-subtitle">专业活动与展览策划</div>
+  <div class="hero-line"></div>
+  <p class="hero-desc">从概念到现场，为品牌打造令人难忘的沉浸式体验。专注大型科技展会、品牌发布会及互动体验空间设计与执行。</p>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+  </div>
+</section>
+
+<!-- ═══════ ABOUT ═══════ -->
+<section id="about" class="fade-in">
+  <div class="section-label">About</div>
+  <h2 class="section-title">关于我们</h2>
+  <div class="section-divider"></div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p><strong>Famevents</strong> 是一家专注于<strong>大型活动策划与展览展示</strong>的创意执行团队。我们服务于全球知名品牌与科技公司，从概念设计到现场落地，提供全流程解决方案。</p>
+      <p>团队核心成员拥有<strong>十余年行业经验</strong>，深耕科技展会领域。我们擅长将品牌理念转化为可感知的物理空间与互动体验，让每一次亮相都成为话题。</p>
+      <p>从华为开发者大会（HDC）到各类品牌旗舰活动，<strong>精准执行与细节把控</strong>是我们的立身之本。</p>
+    </div>
+    <div class="about-stats">
+      <div class="stat-card">
+        <div class="stat-number">10+</div>
+        <div class="stat-label">年行业经验</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">100+</div>
+        <div class="stat-label">项目交付</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">50+</div>
+        <div class="stat-label">合作品牌</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">4</div>
+        <div class="stat-label">城市常驻服务</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ SERVICES ═══════ -->
+<section id="services" class="fade-in">
+  <div class="section-label">Services</div>
+  <h2 class="section-title">核心业务</h2>
+  <div class="section-divider"></div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">🎪</div>
+      <div class="service-title">大型展会策划</div>
+      <div class="service-desc">科技展会、行业峰会、产品发布会的整体策划与执行管理，从展位设计到搭建落地的全链路把控。</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🎨</div>
+      <div class="service-title">互动体验设计</div>
+      <div class="service-desc">沉浸式互动展区规划、用户体验动线设计、数字装置与实体空间的融合方案。</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📐</div>
+      <div class="service-title">空间设计与施工</div>
+      <div class="service-desc">3D建模、LayOut施工图输出、物料清单统筹、现场搭建监理与质量验收。</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🎯</div>
+      <div class="service-title">项目管理与运营</div>
+      <div class="service-desc">多供应商协调、进度管控、应急预案制定、VIP接待流程设计与现场运营支持。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ CASES ═══════ -->
+<section id="cases" class="fade-in">
+  <div class="section-label">Cases</div>
+  <h2 class="section-title">代表案例</h2>
+  <div class="section-divider"></div>
+  <div class="cases-grid">
+
+    <!-- Case 1: HDC 2026 -->
+    <div class="case-card">
+      <div class="case-visual hdc">
+        <span>HDC</span>
+      </div>
+      <div class="case-content">
+        <div class="case-tag">进行中 · 2026</div>
+        <h3 class="case-title">HDC 2026 华为开发者大会<br>互动体验区</h3>
+        <p class="case-desc">承接华为开发者大会互动体验区的整体策划与执行。涵盖四大主题展区（运动健康、智慧办公、鸿蒙智家、智能协作）、合作伙伴联排展位、TECH4ALL 数字包容专区及智慧出行展区。负责从概念方案、3D设计、施工图输出到现场搭建的全流程管理。</p>
+        <div class="case-meta">
+          <span><strong>规模：</strong>4大展区 + 合作伙伴区</span>
+          <span><strong>角色：</strong>策展执行方</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case 2: Placeholder -->
+    <div class="case-card reverse">
+      <div class="case-visual placeholder-2">
+        <span>···</span>
+      </div>
+      <div class="case-content">
+        <div class="case-tag">代表案例</div>
+        <h3 class="case-title">更多案例持续更新中</h3>
+        <p class="case-desc">过往案例资料整理中，包括品牌发布会、行业展会、商业空间设计等代表性项目。敬请期待。</p>
+        <div class="case-meta">
+          <span><strong>状态：</strong>资料整理</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════ CONTACT ═══════ -->
+<section id="contact" class="fade-in">
+  <div class="section-label">Contact</div>
+  <h2 class="section-title">联系我们</h2>
+  <div class="section-divider"></div>
+  <div class="contact-inner">
+    <p class="contact-text">期待与您探讨下一个精彩项目的可能性。<br>无论是概念阶段还是执行阶段，我们都随时待命。</p>
+    <div class="contact-info">
+      <div class="contact-item">
+        <strong>负责人：</strong> 老刘 / Rambo Liu
+      </div>
+      <div class="contact-item">
+        <strong>职位：</strong> Event Director
+      </div>
+      <div class="contact-item">
+        <strong>邮箱：</strong> 待补充
+      </div>
+      <div class="contact-item">
+        <strong>所在地：</strong> 上海 / 深圳
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer>
+  &copy; 2026 <span>Famevents</span>. All rights reserved.
+</footer>
+
+<!-- ═══════ Scroll Reveal ═══════ -->
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
