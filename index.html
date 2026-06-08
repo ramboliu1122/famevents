@@ -302,14 +302,13 @@
     min-height: 5rem;
   }
 
-  .client-item small {
-    display: block;
-    font-family: var(--font-body);
-    font-weight: 400;
-    font-size: 0.72rem;
-    color: var(--fg-muted);
-    margin-top: 0.25rem;
+  .client-item img {
+    max-height: 2.2rem;
+    max-width: 100%;
+    opacity: 0.65;
+    transition: opacity 0.2s;
   }
+  .client-item img:hover { opacity: 1; }
   #contact { border-top: 1px solid var(--border); text-align: center; }
 
   .contact-inner { max-width: 520px; margin: 0 auto; }
@@ -493,7 +492,7 @@
     <div class="client-item">施耐德<small>活动执行</small></div>
     <div class="client-item">上海车展<small>展位执行</small></div>
     <div class="client-item">千寻位置<small>北京 · 无锡展厅</small></div>
-    <div class="client-item">BabyFirst 宝贝第一<small>发布会 · 展示道具</small></div>
+    <div class="client-item"><img src="logos/babyfirst-gray.png" alt="BabyFirst 宝贝第一"></div>
     <div class="client-item">CBME 2026<small>母婴展</small></div>
     <div class="client-item">恒隆广场<small>外场围挡包装</small></div>
     <div class="client-item">ATMOCE<small>品牌项目</small></div>
